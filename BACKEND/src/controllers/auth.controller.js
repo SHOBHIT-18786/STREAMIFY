@@ -41,7 +41,7 @@ export async function signup(req, res) {
             console.log("Error creating Stream user....", error);
         }
 
-        const token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET_KEY, {
+        const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET_KEY, {
             expiresIn: "7d",
         });
 
@@ -114,10 +114,20 @@ export async function onboard(req, res) {
         }, { new: true });
 
         if (!updatedUser) return res.status(404).json({ message: "User not found" });
+        try {
+            await upsertStreamUser({
+                id: updatedUser._id.toString(),
+                name: updatedUser.name,
+                image: updatedUser.profilePic || "",
+            });
+            console.log(`Stream user updated after onboarding for ${updatedUser.name}`);
+        } catch (streamError) {
+            console.log("error updating Stream user during onboarding:",streamError.message);
+        }
         return res.status(200).json({ succes: true, user: updatedUser,});
     }
     catch(error){
         console.error("Onboarding Error",error);
-        res.status(500).json({message:"Internal Server Error"});
+        return res.status(500).json({message:"Internal Server Error"});
     }
 }
