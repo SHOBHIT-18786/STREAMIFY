@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import useAuthUser from "../Hooks/useAuthUser.js";
 import { useQuery } from "@tanstack/react-query";
-import { getStreamToken } from "../lib/api";
+import { getStreamToken } from "../lib/Api.js";
 
 import {
   StreamVideo,
