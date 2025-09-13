@@ -2,7 +2,7 @@ import { useState } from "react";
 import useAuthUser from "../Hooks/useAuthUser.js";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { completeOnboarding } from "../lib/api";
+import { completeOnboarding } from "../lib/Api.js";
 import { LoaderIcon, MapPinIcon, ShipWheelIcon, ShuffleIcon } from "lucide-react";
 import { LANGUAGES } from "../constants";
 
